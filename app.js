@@ -28,17 +28,21 @@ function setUpGame() {
     }
     //ENEMY SETUP
     let enemy = {},
-        enemy_width = 50,
+        enemy_width = (getPercentageofScreen(5)),
         enemy_height = 40,
         enemy_img = new Image();
-    enemy_img.src = '/alien-up.svg';
+    enemy_img.src = '/alien-up.svg'; 
+
+    function getPercentageofScreen (number) {
+        return (canvas.width/100*number);
+    }
 
 
     for (i = 0; i < 10; i++) {
         enemy = {
             width: enemy_width,
             height: enemy_height,
-            x: (50 * i),
+            x: (getPercentageofScreen(10) + (getPercentageofScreen(8)*i)),
             y: 50,
             draw: function () {
                 c.drawImage(enemy_img, this.x, this.y, this.width, this.height)
