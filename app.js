@@ -13,7 +13,7 @@ function setUpGame() {
     let player_width = 50,
         player_height = 40,
         player_img = new Image();
-    player_img.src = '/ship.svg'
+        player_img.src = '/ship.svg'
 
     // CREATE PLAYER
 
@@ -26,23 +26,23 @@ function setUpGame() {
             c.drawImage(player_img, this.x, this.y, this.width, this.height)
         }
     }
+
     //ENEMY SETUP
     let enemy = {},
-        enemy_width = (getPercentageofScreen(5)),
+        enemy_width = (getPercentageOfScreen(5)),
         enemy_height = 40,
         enemy_img = new Image();
     enemy_img.src = '/alien-up.svg'; 
 
-    function getPercentageofScreen (number) {
+    function getPercentageOfScreen (number) {
         return (canvas.width/100*number);
     }
-
 
     for (i = 0; i < 10; i++) {
         enemy = {
             width: enemy_width,
             height: enemy_height,
-            x: (getPercentageofScreen(10) + (getPercentageofScreen(8)*i)),
+            x: (getPercentageOfScreen(10) + (getPercentageOfScreen(8)*i)),
             y: 50,
             draw: function () {
                 c.drawImage(enemy_img, this.x, this.y, this.width, this.height)
@@ -67,7 +67,6 @@ addEventListener('keydown', function (event) {
         player.x += 10;
     }
 })
-
 
 //ANIMATION
 
