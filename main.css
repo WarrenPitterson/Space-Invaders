@@ -6,14 +6,4 @@ canvas {
  
  body {
     margin: 0;
- 
- }
- 
- #ship {
-    position: absolute;
-    z-index: 10;
-    height: 30px;
-    width: 30px;
-    bottom: 7px;
-    left: 650px;
  }
