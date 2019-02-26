@@ -42,6 +42,24 @@ addEventListener('keydown', function(event)
        }
 })
 
+//ENEMY SETUP
+
+let enemy = {},
+enemy_width = 50,
+enemy_height = 40,
+enemy_img = new Image();
+enemy_img.src = '/alien-up.svg'
+
+enemy = {
+    width: enemy_width,
+    height: enemy_height,
+    x : 50,
+    y : 50,
+    draw: function() {
+        c.drawImage (enemy_img, this.x, this.y, this.width, this.height)
+    }
+ }
+
 
 //ANIMATION
 
@@ -49,5 +67,6 @@ function animate() {
    requestAnimationFrame(animate);
    c.clearRect (0,0, canvas.width, canvas.height);
    player.draw();
+   enemy.draw();
 }
 animate();
