@@ -1,0 +1,32 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    margin: 0;
+    overflow: hidden;
+ }
+
+#overlay {
+     position: absolute;
+     margin: auto;
+     width: 72%;
+     height: 100%;
+ }
+ 
+ img {
+     position: absolute;
+     display: block;
+     width: 100%;
+}
+
+
+ 
+ #ship {
+    position: absolute;
+    z-index: 10;
+    height: 30px;
+    width: 30px;
+    bottom: 7px;
+    left: 650px;
+ }
