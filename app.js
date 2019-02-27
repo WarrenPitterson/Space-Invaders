@@ -53,19 +53,21 @@ function setUpGame() {
         return (canvas.width/100*number);
     }
     // FOR LOOP TO CREATE A ROW OF ENEMIES 
-    for (i = 0; i < 10; i++) {
+    for (let rowIndex = 0; rowIndex<3; rowIndex++) {
+        for (columnIndex = 0; columnIndex < 10; columnIndex++) {
         enemy = {
             width: enemy_width,
             height: enemy_height,
-            x: (getPercentageOfScreen(10) + (getPercentageOfScreen(8)*i)),
-            y: 50,
+            x: (getPercentageOfScreen(10) + (getPercentageOfScreen(8)*columnIndex)),
+            y: 50 + (100*rowIndex),
             draw: function () {
                 c.drawImage(enemy_img, this.x, this.y, this.width, this.height)
             }
         };
-        enemies.push(enemy);
+        enemies.push(enemy);    }
     }
 }
+
 
 //ARROW KEYS
 let inputKeys = {
