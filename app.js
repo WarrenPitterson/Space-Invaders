@@ -37,7 +37,7 @@ function setUpGame() {
     function getPercentageOfScreen (number) {
         return (canvas.width/100*number);
     }
-
+    // FOR LOOP TO CREATE A ROW OF ENEMIES 
     for (i = 0; i < 10; i++) {
         enemy = {
             width: enemy_width,
