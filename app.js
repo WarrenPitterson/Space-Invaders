@@ -23,7 +23,7 @@ function setUpGame() {
         height: player_height,
         x: innerWidth / 2 - player_width / 2,
         y: innerHeight - (player_height + 10),
-        draw: function () {
+        draw() {
            
         //NEW stops player ship moving off screen
             if(this.x <= 0) {
@@ -80,7 +80,7 @@ addEventListener('keydown', function (event) {
 
     } else if (inputKeys["rightKey"] == event.keyCode) {
         player.x += 10;
-    }
+    } 
 })
 
 //ANIMATION
