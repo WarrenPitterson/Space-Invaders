@@ -53,7 +53,8 @@ function setUpGame() {
         return (canvas.width/100*number);
     }
     // FOR LOOP TO CREATE A ROW OF ENEMIES 
-    for (let rowIndex = 0; rowIndex<3; rowIndex++) {
+    
+    for (let rowIndex = 0; rowIndex<4; rowIndex++) {
         for (columnIndex = 0; columnIndex < 10; columnIndex++) {
         enemy = {
             width: enemy_width,
@@ -67,7 +68,6 @@ function setUpGame() {
         enemies.push(enemy);    }
     }
 }
-
 
 //ARROW KEYS
 let inputKeys = {
