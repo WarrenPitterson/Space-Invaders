@@ -3,6 +3,7 @@ let c = canvas.getContext('2d');
 let pageLoaded = false;
 let player = {};
 let enemies = [];
+let score = 0;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -23,6 +24,20 @@ function setUpGame() {
         x: innerWidth / 2 - player_width / 2,
         y: innerHeight - (player_height + 10),
         draw: function () {
+           
+        //NEW stops player ship moving off screen
+            if(this.x <= 0) {
+                this.x = 0; 
+            }else if(this.x >= (innerWidth - this.width)) {
+                this.x = (innerWidth - this.width)
+            }
+            
+            if(this.y <= 0) {
+                this.y = 0; 
+            }else if(this.y >= (innerHeight - this.height)) {
+                this.y = (innerHeight - this.height)
+            }
+
             c.drawImage(player_img, this.x, this.y, this.width, this.height)
         }
     }
@@ -32,7 +47,7 @@ function setUpGame() {
         enemy_width = (getPercentageOfScreen(5)),
         enemy_height = 40,
         enemy_img = new Image();
-    enemy_img.src = '/alien-up.svg'; 
+        enemy_img.src = '/alien-up.svg'; 
 
     function getPercentageOfScreen (number) {
         return (canvas.width/100*number);
@@ -73,6 +88,13 @@ addEventListener('keydown', function (event) {
 function animate() {
     c.clearRect(0, 0, canvas.width, canvas.height);
     requestAnimationFrame(animate);
+    
+// SCORE 
+    c.font = '18px arial';
+    c.fillStyle = '#fff';
+    c.fillText ('SCORE: '+score, 650, 20);
+    
+    
     player.draw();
 
     enemies.forEach(function (enemy) {
