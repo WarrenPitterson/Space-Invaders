@@ -5,18 +5,18 @@ let player = {};
 let enemies = [];
 let score = 0;
 let isAlienUp = true;
-let alienAnimationTimeout = 50;
+let alienAnimationTimeout = 15;
 let alienMoveX = 50;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
-function setUpGame() {
+function drawPlayerAndEnemy() {
     //PLAYER SETUP
     let player_width = 50,
         player_height = 40,
         player_img = new Image();
-        player_img.src = './ship.svg'
+    player_img.src = './ship.svg'
 
     // CREATE PLAYER
 
@@ -26,17 +26,17 @@ function setUpGame() {
         x: innerWidth / 2 - player_width / 2,
         y: innerHeight - (player_height + 10),
         draw() {
-           
-        //NEW stops player ship moving off screen
-            if(this.x <= 0) {
-                this.x = 0; 
-            }else if(this.x >= (innerWidth - this.width)) {
+
+            //NEW stops player ship moving off screen
+            if (this.x <= 0) {
+                this.x = 0;
+            } else if (this.x >= (innerWidth - this.width)) {
                 this.x = (innerWidth - this.width)
             }
-            
-            if(this.y <= 0) {
-                this.y = 0; 
-            }else if(this.y >= (innerHeight - this.height)) {
+
+            if (this.y <= 0) {
+                this.y = 0;
+            } else if (this.y >= (innerHeight - this.height)) {
                 this.y = (innerHeight - this.height)
             }
 
@@ -45,28 +45,27 @@ function setUpGame() {
     }
 
     //ENEMY SETUP
-    
-    let   enemy_width = (getPercentageOfScreen(3))
-    let   enemy_height = 20
 
-    function getPercentageOfScreen (number) {
-        return (canvas.width/100*number);
-    }
+    let enemy_width = (getPercentageOfScreen(3))
+    let enemy_height = 20
+
+
     // FOR LOOP TO CREATE A ROW OF ENEMIES 
-    
-    for (let rowIndex = 0; rowIndex<3; rowIndex++) {
+
+    for (let rowIndex = 0; rowIndex < 3; rowIndex++) {
         for (columnIndex = 0; columnIndex < 10; columnIndex++) {
-        isAlienUp = !isAlienUp;
-        let enemy = {
-            width: enemy_width,
-            height: enemy_height,
-            x:(getPercentageOfScreen(10) + (getPercentageOfScreen(7)*columnIndex)),
-            y: 50 + (100*rowIndex),
-            draw: function () {
-                c.drawImage(GetAlienImage(), this.x, this.y, this.width, this.height)
-            }
-        };
-        enemies.push(enemy);    }
+            isAlienUp = !isAlienUp;
+            let enemy = {
+                width: enemy_width,
+                height: enemy_height,
+                x: getAlienXPosition(columnIndex),
+                y: 50 + (100 * rowIndex),
+                draw: function () {
+                    c.drawImage(GetAlienImage(), this.x, this.y, this.width, this.height)
+                }
+            };
+            enemies.push(enemy);
+        }
     }
 }
 
@@ -84,49 +83,63 @@ addEventListener('keydown', function (event) {
 
     } else if (inputKeys["rightKey"] == event.keyCode) {
         player.x += 10;
-    } 
+    }
 })
 
 //ANIMATION
 
-function GetAlienImage ()  {
+function GetAlienImage() {
     enemy_img = new Image();
     if (isAlienUp) {
-        enemy_img.src = './alien-up.svg'; 
-    }else 
-         {
-        enemy_img.src = './alien-down.svg'; 
+        enemy_img.src = './alien-up.svg';
+    } else {
+        enemy_img.src = './alien-down.svg';
     }
     return enemy_img
 
 }
 
 function animateAliens() {
-    if (alienAnimationTimeout >= 0 ) {
-        alienAnimationTimeout -- } else {
-            alienAnimationTimeout = 50;
-            isAlienUp = !isAlienUp;
-            alienMoveX = (alienMoveX + 200);
-        } 
+    if (alienAnimationTimeout >= 0) {
+        alienAnimationTimeout--
+    } else {
+        alienAnimationTimeout = 15;
+        isAlienUp = !isAlienUp;
+        alienMoveX = (alienMoveX + 10);
+        
+        enemies.forEach(enemy =>{
+            enemy.x = enemy.x+alienMoveX
+        })
     }
+}
 
-    function getAlienXPosition() {
-    }
 
+function getAlienXPosition(columnIndex) {
+    let margin = getPercentageOfScreen(10);
+    let spaceBetweenEnemies = getPercentageOfScreen(8);
+    let returnResult = margin + (spaceBetweenEnemies * columnIndex);
+    return returnResult;
+}
+
+function getPercentageOfScreen(number) {
+    return (canvas.width / 100 * number);
+}
+
+
+drawPlayerAndEnemy();
 
 function animate() {
     c.clearRect(0, 0, canvas.width, canvas.height);
     requestAnimationFrame(animate);
+    
     animateAliens();
-    getAlienXPosition();
-
 
     //console.log("tick", (new Date().getSeconds()))
-// SCORE 
+    // SCORE 
     c.font = '18px arial';
     c.fillStyle = '#fff';
-    c.fillText ('SCORE: '+score, 650, 20);
-    
+    c.fillText('SCORE: ' + score, 650, 20);
+
     player.draw();
 
     enemies.forEach(function (enemy) {
@@ -134,5 +147,4 @@ function animate() {
     });
 }
 
-setUpGame();
 animate();
