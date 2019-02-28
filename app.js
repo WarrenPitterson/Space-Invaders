@@ -6,6 +6,7 @@ let enemies = [];
 let score = 0;
 let isAlienUp = true;
 let alienAnimationTimeout = 50;
+let alienMoveX = 50;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -59,7 +60,7 @@ function setUpGame() {
         let enemy = {
             width: enemy_width,
             height: enemy_height,
-            x: (getPercentageOfScreen(10) + (getPercentageOfScreen(7)*columnIndex)),
+            x:(getPercentageOfScreen(10) + (getPercentageOfScreen(7)*columnIndex)),
             y: 50 + (100*rowIndex),
             draw: function () {
                 c.drawImage(GetAlienImage(), this.x, this.y, this.width, this.height)
@@ -97,22 +98,27 @@ function GetAlienImage ()  {
         enemy_img.src = './alien-down.svg'; 
     }
     return enemy_img
+
 }
 
 function animateAliens() {
     if (alienAnimationTimeout >= 0 ) {
         alienAnimationTimeout -- } else {
-            alienAnimationTimeout = 50
+            alienAnimationTimeout = 50;
             isAlienUp = !isAlienUp;
+            alienMoveX = (alienMoveX + 200);
         } 
     }
 
-function alienMove() {} 
+    function getAlienXPosition() {
+    }
+
 
 function animate() {
     c.clearRect(0, 0, canvas.width, canvas.height);
     requestAnimationFrame(animate);
     animateAliens();
+    getAlienXPosition();
 
 
     //console.log("tick", (new Date().getSeconds()))
