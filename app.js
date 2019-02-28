@@ -5,6 +5,7 @@ let player = {};
 let enemies = [];
 let score = 0;
 let isAlienUp = true;
+let alienAnimationTimeout = 50;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -98,18 +99,27 @@ function GetAlienImage ()  {
     return enemy_img
 }
 
+function animateAliens() {
+    if (alienAnimationTimeout >= 0 ) {
+        alienAnimationTimeout -- } else {
+            alienAnimationTimeout = 50
+            isAlienUp = !isAlienUp;
+        } 
+    }
+
+function alienMove() {} 
+
 function animate() {
     c.clearRect(0, 0, canvas.width, canvas.height);
     requestAnimationFrame(animate);
+    animateAliens();
 
 
-    isAlienUp = !isAlienUp;
     //console.log("tick", (new Date().getSeconds()))
 // SCORE 
     c.font = '18px arial';
     c.fillStyle = '#fff';
     c.fillText ('SCORE: '+score, 650, 20);
-    
     
     player.draw();
 
