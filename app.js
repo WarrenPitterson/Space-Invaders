@@ -4,10 +4,10 @@ let pageLoaded = false;
 let player = {};
 let enemies = [];
 let score = 0;
+let isAlienUp = true;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-
 
 function setUpGame() {
     //PLAYER SETUP
@@ -43,11 +43,9 @@ function setUpGame() {
     }
 
     //ENEMY SETUP
-    let enemy = {},
-        enemy_width = (getPercentageOfScreen(3)),
-        enemy_height = 20,
-        enemy_img = new Image();
-        enemy_img.src = './alien-up.svg'; 
+    
+    let   enemy_width = (getPercentageOfScreen(3))
+    let   enemy_height = 20
 
     function getPercentageOfScreen (number) {
         return (canvas.width/100*number);
@@ -56,18 +54,20 @@ function setUpGame() {
     
     for (let rowIndex = 0; rowIndex<3; rowIndex++) {
         for (columnIndex = 0; columnIndex < 10; columnIndex++) {
-        enemy = {
+        isAlienUp = !isAlienUp;
+        let enemy = {
             width: enemy_width,
             height: enemy_height,
             x: (getPercentageOfScreen(10) + (getPercentageOfScreen(7)*columnIndex)),
             y: 50 + (100*rowIndex),
             draw: function () {
-                c.drawImage(enemy_img, this.x, this.y, this.width, this.height)
+                c.drawImage(GetAlienImage(), this.x, this.y, this.width, this.height)
             }
         };
         enemies.push(enemy);    }
     }
 }
+
 
 //ARROW KEYS
 let inputKeys = {
@@ -87,10 +87,24 @@ addEventListener('keydown', function (event) {
 
 //ANIMATION
 
+function GetAlienImage ()  {
+    enemy_img = new Image();
+    if (isAlienUp) {
+        enemy_img.src = './alien-up.svg'; 
+    }else 
+         {
+        enemy_img.src = './alien-down.svg'; 
+    }
+    return enemy_img
+}
+
 function animate() {
     c.clearRect(0, 0, canvas.width, canvas.height);
     requestAnimationFrame(animate);
-    
+
+
+    isAlienUp = !isAlienUp;
+    //console.log("tick", (new Date().getSeconds()))
 // SCORE 
     c.font = '18px arial';
     c.fillStyle = '#fff';
