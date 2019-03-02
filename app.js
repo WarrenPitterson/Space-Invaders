@@ -59,7 +59,7 @@ function drawPlayerAndEnemy() {
                 width: enemy_width,
                 height: enemy_height,
                 x: getAlienXPosition(columnIndex),
-                y: 50 + (100 * rowIndex),
+                y: getAlienYPosition(rowIndex),
                 draw: function () {
                     c.drawImage(GetAlienImage(), this.x, this.y, this.width, this.height)
                 }
@@ -120,6 +120,12 @@ function getAlienXPosition(columnIndex) {
     let returnResult = margin + (spaceBetweenEnemies * columnIndex);
     return returnResult;
 }
+
+function getAlienYPosition(rowIndex) {
+    let returnYresult = 50 + (100 * rowIndex)
+    return returnYresult
+}
+
 
 function getPercentageOfScreen(number) {
     return (canvas.width / 100 * number);
