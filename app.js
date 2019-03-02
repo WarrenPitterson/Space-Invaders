@@ -6,7 +6,8 @@ let enemies = [];
 let score = 0;
 let isAlienUp = true;
 let alienAnimationTimeout = 15;
-let alienMoveX = 50;
+let alienMoveX = 10;
+let alienMoveY = 10;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
@@ -45,10 +46,10 @@ function drawPlayerAndEnemy() {
     }
 
         //Missle SETUP
-        let missle_width = 100,
-            missle_height = 400,
+        let missle_width = 50,
+            missle_height = 50,
             missle_img = new Image();
-        missle_img.src = './missle.svg'
+        missle_img.src = './missle.png'
 
         missle = {
             width: missle_width,
@@ -108,7 +109,7 @@ addEventListener('keydown', function (event) {
         player.x += 30;
     }
     else if (inputKeys["spacebar"] == event.keyCode) {
-        missle.y += 20;
+        missle.y -= 20;
     }
 })
 
@@ -119,7 +120,7 @@ function GetAlienImage() {
     if (isAlienUp) {
         enemy_img.src = './alien-up.svg';
     } else {
-        enemy_img.src = './alien-down.svg';
+        enemy_img.src = './alien-down.png';
     }
     return enemy_img
 
@@ -129,12 +130,14 @@ function animateAliens() {
     if (alienAnimationTimeout >= 0) {
         alienAnimationTimeout--
     } else {
-        alienAnimationTimeout = 15;
+        alienAnimationTimeout = 20;
         isAlienUp = !isAlienUp;
-        alienMoveX = (alienMoveX + 5);
+        alienMoveX = (alienMoveX + 1);
+        alienMoveY = (alienMoveY + 1);
         
         enemies.forEach(enemy =>{
-            enemy.x = enemy.x+alienMoveX
+            enemy.x = enemy.x+alienMoveX,
+            enemy.y = enemy.y+alienMoveY
         })
     }
 }
@@ -170,7 +173,7 @@ function animate() {
     c.clearRect(0, 0, canvas.width, canvas.height);
     requestAnimationFrame(animate);
     animateAliens();
-    enemyXEnd();
+
 
     //console.log("tick", (new Date().getSeconds()))
     // SCORE 
@@ -179,6 +182,7 @@ function animate() {
     c.fillText('SCORE: ' + score, 650, 20);
 
     player.draw();
+    missle.draw();
 
     enemies.forEach(function (enemy) {
         enemy.draw();
