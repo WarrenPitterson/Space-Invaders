@@ -44,6 +44,24 @@ function drawPlayerAndEnemy() {
         }
     }
 
+        //Missle SETUP
+        let missle_width = 50,
+            missle_height = 40,
+            missle_img = new Image();
+        missle_img.src = './missle.svg';
+
+        missle = {
+            width: missle_width,
+            height: missle_height,
+            x: player.x,
+            y: player.y,
+            draw: function () {
+                c.drawImage(missle_img, this.x, this.y, this.width, this.height)
+            }
+        }
+
+
+
     //ENEMY SETUP
 
     let enemy_width = (getPercentageOfScreen(3))
@@ -83,6 +101,9 @@ addEventListener('keydown', function (event) {
 
     } else if (inputKeys["rightKey"] == event.keyCode) {
         player.x += 10;
+    }
+    else if (inputKeys["spacebar"] == event.keyCode) {
+        missle.y += 20;
     }
 })
 
@@ -137,7 +158,6 @@ drawPlayerAndEnemy();
 function animate() {
     c.clearRect(0, 0, canvas.width, canvas.height);
     requestAnimationFrame(animate);
-    
     animateAliens();
 
     //console.log("tick", (new Date().getSeconds()))
