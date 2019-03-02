@@ -16,7 +16,7 @@ function drawPlayerAndEnemy() {
     let player_width = 50,
         player_height = 40,
         player_img = new Image();
-    player_img.src = './ship.svg'
+        player_img.src = './ship.svg'
 
     // CREATE PLAYER
 
@@ -45,10 +45,10 @@ function drawPlayerAndEnemy() {
     }
 
         //Missle SETUP
-        let missle_width = 50,
-            missle_height = 40,
+        let missle_width = 100,
+            missle_height = 400,
             missle_img = new Image();
-        missle_img.src = './missle.svg';
+        missle_img.src = './missle.svg'
 
         missle = {
             width: missle_width,
@@ -58,7 +58,7 @@ function drawPlayerAndEnemy() {
             draw: function () {
                 c.drawImage(missle_img, this.x, this.y, this.width, this.height)
             }
-        }
+        };
 
 
 
@@ -79,6 +79,11 @@ function drawPlayerAndEnemy() {
                 x: getAlienXPosition(columnIndex),
                 y: getAlienYPosition(rowIndex),
                 draw: function () {
+                    if (this.x <= 0) {
+                        this.x = 0;
+                    } else if (this.x >= (innerWidth - this.width)) {
+                        this.x = (innerWidth - this.width)
+                    }
                     c.drawImage(GetAlienImage(), this.x, this.y, this.width, this.height)
                 }
             };
@@ -97,10 +102,10 @@ let inputKeys = {
 
 addEventListener('keydown', function (event) {
     if (inputKeys["leftKey"] == event.keyCode) {
-        player.x += -10;
+        player.x += -30;
 
     } else if (inputKeys["rightKey"] == event.keyCode) {
-        player.x += 10;
+        player.x += 30;
     }
     else if (inputKeys["spacebar"] == event.keyCode) {
         missle.y += 20;
@@ -126,7 +131,7 @@ function animateAliens() {
     } else {
         alienAnimationTimeout = 15;
         isAlienUp = !isAlienUp;
-        alienMoveX = (alienMoveX + 10);
+        alienMoveX = (alienMoveX + 5);
         
         enemies.forEach(enemy =>{
             enemy.x = enemy.x+alienMoveX
@@ -143,13 +148,19 @@ function getAlienXPosition(columnIndex) {
 }
 
 function getAlienYPosition(rowIndex) {
-    let returnYresult = 50 + (100 * rowIndex)
+    let returnYresult = 200 + (50 * rowIndex)
     return returnYresult
 }
 
 
 function getPercentageOfScreen(number) {
     return (canvas.width / 100 * number);
+}
+
+function enemyXEnd () {
+    if (alienMoveX >= 60) {
+        alienMoveX = (alienMoveX - 20);
+    }
 }
 
 
@@ -159,6 +170,7 @@ function animate() {
     c.clearRect(0, 0, canvas.width, canvas.height);
     requestAnimationFrame(animate);
     animateAliens();
+    enemyXEnd();
 
     //console.log("tick", (new Date().getSeconds()))
     // SCORE 
