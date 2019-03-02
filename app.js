@@ -5,7 +5,7 @@ let player = {};
 let enemies = [];
 let score = 0;
 let isAlienUp = true;
-let alienAnimationTimeout = 15;
+let alienAnimationTimeout = 50;
 let alienMoveX = 10;
 let alienMoveY = 10;
 
@@ -130,13 +130,13 @@ function animateAliens() {
     if (alienAnimationTimeout >= 0) {
         alienAnimationTimeout--
     } else {
-        alienAnimationTimeout = 20;
+        alienAnimationTimeout = 50;
         isAlienUp = !isAlienUp;
         alienMoveX = (alienMoveX + 1);
         alienMoveY = (alienMoveY + 1);
         
         enemies.forEach(enemy =>{
-            enemy.x = enemy.x+alienMoveX,
+         //   enemy.x = enemy.x+alienMoveX,
             enemy.y = enemy.y+alienMoveY
         })
     }
@@ -144,7 +144,7 @@ function animateAliens() {
 
 
 function getAlienXPosition(columnIndex) {
-    let margin = getPercentageOfScreen(10);
+    let margin = getPercentageOfScreen(18);
     let spaceBetweenEnemies = getPercentageOfScreen(8);
     let returnResult = margin + (spaceBetweenEnemies * columnIndex);
     return returnResult;
