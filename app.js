@@ -3,6 +3,7 @@ let c = canvas.getContext('2d');
 let pageLoaded = false;
 let player = {};
 let enemies = [];
+let missles = [];
 let score = 0;
 let isAlienUp = true;
 let alienAnimationTimeout = 50;
@@ -11,6 +12,12 @@ let alienMoveY = 10;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
+
+function start () {
+    pageLoaded = true;
+}
+
+start(); 
 
 function drawPlayerAndEnemy() {
     //PLAYER SETUP
@@ -46,6 +53,8 @@ function drawPlayerAndEnemy() {
     }
 
         //Missle SETUP
+
+        for (i=0; i<5; i++) {
         let missle_width = 50,
             missle_height = 50,
             missle_img = new Image();
@@ -55,11 +64,13 @@ function drawPlayerAndEnemy() {
             width: missle_width,
             height: missle_height,
             x: player.x,
-            y: player.y,
+            y: player.y, 
             draw: function () {
                 c.drawImage(missle_img, this.x, this.y, this.width, this.height)
             }
         };
+        missles.push(missle); 
+    }
 
 
 
@@ -109,7 +120,7 @@ addEventListener('keydown', function (event) {
         player.x += 30;
     }
     else if (inputKeys["spacebar"] == event.keyCode) {
-        missle.y -= 20;
+        missle.y -= 500;
     }
 })
 
@@ -136,11 +147,18 @@ function animateAliens() {
         alienMoveY = (alienMoveY + 1);
         
         enemies.forEach(enemy =>{
-         //   enemy.x = enemy.x+alienMoveX,
+            (enemy.x = enemy.x+alienMoveX)
             enemy.y = enemy.y+alienMoveY
         })
     }
 }
+
+// function animateAliensY(enemies) {
+//     alienMoveY = (alienMoveY + 1)
+//     enemies.forEach(enemy => {
+//         enemy.y = enemy.y+alienMoveY;
+//     })
+// }
 
 
 function getAlienXPosition(columnIndex) {
@@ -160,13 +178,6 @@ function getPercentageOfScreen(number) {
     return (canvas.width / 100 * number);
 }
 
-function enemyXEnd () {
-    if (alienMoveX >= 60) {
-        alienMoveX = (alienMoveX - 20);
-    }
-}
-
-
 drawPlayerAndEnemy();
 
 function animate() {
@@ -175,6 +186,7 @@ function animate() {
     animateAliens();
 
 
+   
     //console.log("tick", (new Date().getSeconds()))
     // SCORE 
     c.font = '18px arial';
@@ -182,11 +194,11 @@ function animate() {
     c.fillText('SCORE: ' + score, 650, 20);
 
     player.draw();
+    missles.forEach(function(missle){
     missle.draw();
-
+    });
     enemies.forEach(function (enemy) {
         enemy.draw();
     });
 }
-
 animate();
