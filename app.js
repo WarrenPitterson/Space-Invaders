@@ -14,11 +14,6 @@ let player = {
         } else if (this.x >= (innerWidth - this.width)) {
             this.x = (innerWidth - this.width)
         }
-        if (this.y <= 0) {
-            this.y = 0;
-        } else if (this.y >= (innerHeight - this.height)) {
-            this.y = (innerHeight - this.height)
-        }
         c.drawImage(player_img, this.x, this.y, this.width, this.height)
     }
 }
@@ -51,7 +46,7 @@ addEventListener('keydown', function (event) {
 
 
 function createMissle() {
-    for (i = 0; i < 2; i++) {
+    for (i = 0; i < 1; i++) {
         missle_img = new Image();
         missle_img.src = './missle.png'
         missle = {
@@ -68,8 +63,8 @@ function createMissle() {
 
     addEventListener('keydown', function (event) {
         if (event.key == "Space") {
-        missle.y -= 500;
-    }
+            missle.y -= 500;
+        }
     })
 }
 
@@ -86,17 +81,16 @@ function createEnemy(rowIndex) {
             x: getAlienXPosition(columnIndex),
             y: getAlienYPosition(rowIndex),
             draw() {
-                if (this.x <= 0) {
-                    this.x = 0;
-                } else if (this.x >= (innerWidth - this.width)) {
-                    this.x = (innerWidth - this.width)
-                }
                 c.drawImage(GetAlienImage(), this.x, this.y, this.width, this.height)
             }
         };
         enemies.push(enemy);
     }
 }
+
+// function deleteEnemy() {
+//     enemies.pop[enemy];
+// }
 
 function GetAlienImage() {
     enemy_img = new Image();
@@ -108,70 +102,87 @@ function GetAlienImage() {
     return enemy_img
 }
 
-function animationTimeoutY() {
-    if (alienAnimationTimeoutY >= 0) {
-        alienAnimationTimeoutY--
-    } else {
-        alienAnimationTimeoutY = 500;
-        moveAlienY();
+// function AlienOffScreen() {
+//     enemies.forEach(function (enemy) {
+//         (enemy.x >= (canvas.width - enemy.x)); {
+//             enemy.x = (canvas.width - enemy.x)
+//         }
+//     }
+//     )}
+
+    function animationTimeoutY() {
+        if (alienAnimationTimeoutY >= 0) {
+            alienAnimationTimeoutY--
+        } else {
+            alienAnimationTimeoutY = 200;
+            moveAlienY();
+        }
     }
-}
 
-function animationTimeoutX() {
-    if (alienAnimationTimeoutX >= 0) {
-        alienAnimationTimeoutX--
-    } else {
-        alienAnimationTimeoutX = 50;
-        isAlienUp = !isAlienUp;
-        moveAlienX();
+    function animationTimeoutX() {
+        if (alienAnimationTimeoutX >= 0) {
+            alienAnimationTimeoutX--
+        } else {
+            alienAnimationTimeoutX = 10;
+            isAlienUp = !isAlienUp;
+            moveAlienRight();
+        }
     }
-}
 
-function moveAlienY() {
-    alienMoveY = (alienMoveY + 1);
-    enemies.forEach(enemy => {
-        enemy.y = enemy.y + alienMoveY
-    })
-}
+    function moveAlienY() {
+        alienMoveY = (alienMoveY + 1);
+        enemies.forEach(enemy => {
+            enemy.y = enemy.y + alienMoveY
+        })
+    }
 
-function moveAlienX() {
-    alienMoveX = (alienMoveX + 1);
-    enemies.forEach(enemy => {
-        enemy.x = enemy.x + alienMoveX
-    })
-}
+    function moveAlienRight() {
+        alienMoveX = (alienMoveX + 1);
+        enemies.forEach(enemy => {
+            enemy.x = enemy.x + alienMoveX
+        })
+    }
 
-function getAlienXPosition(columnIndex) {
-    let margin = getPercentageOfScreen(10);
-    let spaceBetweenEnemies = getPercentageOfScreen(8);
-    let returnResult = margin + (spaceBetweenEnemies * columnIndex);
-    return returnResult;
-}
+    function moveAlienLeft() {
+        alienMoveX = (alienMoveX + 1);
+        enemies.forEach(enemy => {
+            enemy.x = enemy.x - alienMoveX
+        })
+    }
 
-function getPercentageOfScreen(number) {
-    return (canvas.width / 100 * number);
-}
+    function getAlienXPosition(columnIndex) {
+        let margin = getPercentageOfScreen(10);
+        let spaceBetweenEnemies = getPercentageOfScreen(8);
+        let returnResult = margin + (spaceBetweenEnemies * columnIndex);
+        return returnResult;
+    }
 
-createMissle();
-moveAlienY();
+    function getPercentageOfScreen(number) {
+        return (canvas.width / 100 * number);
+    }
 
+    createMissle();
+    moveAlienY();
+    //AlienOffScreen();
 
-function animate() {
-    c.clearRect(0, 0, canvas.width, canvas.height);
-    requestAnimationFrame(animate);
-    animationTimeoutX();
-    animationTimeoutY();
+    function animate() {
+        c.clearRect(0, 0, canvas.width, canvas.height);
+        requestAnimationFrame(animate);
+        animationTimeoutX();
+        animationTimeoutY();
+        console.log(enemies)
 
-    //console.log("tick", (new Date().getSeconds()))
-    c.font = '18px arial';
-    c.fillStyle = '#fff';
-    c.fillText('SCORE: ' + score, 650, 20);
-    player.draw();
-    missles.forEach(function (missle) {
-        missle.draw();
-    });
-    enemies.forEach(function (enemy) {
-        enemy.draw();
-    });
-}
-animate();
+        //console.log("tick", (new Date().getSeconds()))
+        c.font = '18px arial';
+        c.fillStyle = '#fff';
+        c.fillText('SCORE: ' + score, 650, 20);
+        player.draw();
+        missles.forEach(function (missle) {
+            missle.draw();
+        });
+        enemies.forEach(function (enemy) {
+            enemy.draw();
+        });
+    }
+    animate();
+    
