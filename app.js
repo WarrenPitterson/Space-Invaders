@@ -26,6 +26,7 @@ let alienAnimationTimeoutX = 10;
 let alienAnimationTimeoutY = 50;
 let alienMoveX = 10;
 let alienMoveY = 10;
+let alienLeft = true;
 
 
 canvas.width = window.innerWidth;
@@ -150,6 +151,14 @@ function GetAlienImage() {
         })
     }
 
+    // function alienLeft() {
+    //     if (alienLeft) {
+    //         moveAlienLeft() 
+    //     } else {
+    //         moveAlienRight()
+    //     }
+    // }
+
     function getAlienXPosition(columnIndex) {
         let margin = getPercentageOfScreen(10);
         let spaceBetweenEnemies = getPercentageOfScreen(8);
@@ -170,7 +179,6 @@ function GetAlienImage() {
         requestAnimationFrame(animate);
         animationTimeoutX();
         animationTimeoutY();
-        console.log(enemies)
 
         //console.log("tick", (new Date().getSeconds()))
         c.font = '18px arial';
