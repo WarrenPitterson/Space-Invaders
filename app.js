@@ -85,10 +85,6 @@ function createEnemy(rowIndex) {
     }
 }
 
-// function deleteEnemy() {
-//     enemies.pop[enemy];
-// }
-
 function GetAlienImage() {
     enemy_img = new Image();
     if (isAlienUp) {
@@ -153,8 +149,7 @@ function GetAlienImage() {
         })
     }
 
-    function missleFire(missle) {
-        console.log(missles)
+    function missleFire() {
         missles.forEach(missle => {
             missle.y = missle.y -5
         })
@@ -184,6 +179,12 @@ function GetAlienImage() {
     //moveAlienRight();
     //moveAlienLeft();
 
+    function removeMissle() {
+    if (missle.y <= 0) {
+        missles.shift();
+}
+    }
+
     function doDraw() {
         c.font = '18px arial';
         c.fillStyle = '#fff';
@@ -205,6 +206,7 @@ function GetAlienImage() {
         animationTimeoutX();
         animationTimeoutY();
         missleFire()
+        removeMissle()
     }
 
 
