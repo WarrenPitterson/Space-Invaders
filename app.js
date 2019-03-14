@@ -61,14 +61,14 @@ function createMissle() {
         };
         missles.push(missle);
     }
-
-    addEventListener('keydown', function (event) {
-        if (event.key == "Space") {
-            missle.y -= 500;
-        }
-    })
 }
 
+
+addEventListener('keydown', function (event) {
+    if (event.key == "Space") {
+        createMissle();
+    }
+})
 
 for (rowIndex = 0; rowIndex < 3; rowIndex++) {
     createEnemy(rowIndex)
@@ -115,10 +115,17 @@ function GetAlienImage() {
         if (alienAnimationTimeoutY >= 0) {
             alienAnimationTimeoutY--
         } else {
-            alienAnimationTimeoutY = 200;
+            alienAnimationTimeoutY = 50;
             moveAlienY();
         }
     }
+
+    // function animationTimeZeroMoveRight() {
+    //     if (alienAnimationTimeoutX = 50) {
+    //         moveAlienRight()
+
+    //     }
+    // }
 
     function animationTimeoutX() {
         if (alienAnimationTimeoutX >= 0) {
@@ -126,7 +133,6 @@ function GetAlienImage() {
         } else {
             alienAnimationTimeoutX = 10;
             isAlienUp = !isAlienUp;
-            moveAlienRight();
         }
     }
 
@@ -171,16 +177,12 @@ function GetAlienImage() {
     }
 
     createMissle();
-    moveAlienY();
+    //moveAlienY();
     //AlienOffScreen();
+    //moveAlienRight();
+    //moveAlienLeft();
 
-    function animate() {
-        c.clearRect(0, 0, canvas.width, canvas.height);
-        requestAnimationFrame(animate);
-        animationTimeoutX();
-        animationTimeoutY();
-
-        //console.log("tick", (new Date().getSeconds()))
+    function doDraw() {
         c.font = '18px arial';
         c.fillStyle = '#fff';
         c.fillText('SCORE: ' + score, 650, 20);
@@ -191,6 +193,25 @@ function GetAlienImage() {
         enemies.forEach(function (enemy) {
             enemy.draw();
         });
+
     }
-    animate();
+
+    function doAnimation() {
+        animationTimeoutX();
+        animationTimeoutY();
+
+    }
+
+
+
+
+    function runAnimationFrames() {
+        c.clearRect(0, 0, canvas.width, canvas.height);
+        requestAnimationFrame(runAnimationFrames);
+        doAnimation();
+        doDraw();
+    }
+
+
+    runAnimationFrames();
     
