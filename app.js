@@ -38,12 +38,14 @@ function getAlienYPosition(rowIndex) {
 }
 
 addEventListener('keydown', function (event) {
-    if (event.key == "ArrowLeft") {
+    if (event.code == "ArrowLeft") {
         player.x -= 30;
-    } else if (event.key == "ArrowRight") {
+    } else if (event.code == "ArrowRight") {
         player.x += 30;
-    }
-})
+    } else if (event.code == "Space") {
+             createMissle();
+        }
+    })
 
 
 function createMissle() {
@@ -63,12 +65,6 @@ function createMissle() {
     }
 }
 
-
-addEventListener('keydown', function (event) {
-    if (event.key == "Space") {
-        createMissle();
-    }
-})
 
 for (rowIndex = 0; rowIndex < 3; rowIndex++) {
     createEnemy(rowIndex)
@@ -157,6 +153,13 @@ function GetAlienImage() {
         })
     }
 
+    function missleFire(missle) {
+        console.log(missles)
+        missles.forEach(missle => {
+            missle.y = missle.y -5
+        })
+    }
+
     // function alienLeft() {
     //     if (alienLeft) {
     //         moveAlienLeft() 
@@ -176,7 +179,6 @@ function GetAlienImage() {
         return (canvas.width / 100 * number);
     }
 
-    createMissle();
     //moveAlienY();
     //AlienOffScreen();
     //moveAlienRight();
@@ -193,16 +195,17 @@ function GetAlienImage() {
         enemies.forEach(function (enemy) {
             enemy.draw();
         });
-
     }
+
+
+
+
 
     function doAnimation() {
         animationTimeoutX();
         animationTimeoutY();
-
+        missleFire()
     }
-
-
 
 
     function runAnimationFrames() {
