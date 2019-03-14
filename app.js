@@ -24,8 +24,8 @@ let score = 0;
 let isAlienUp = true;
 let alienAnimationTimeoutX = 10;
 let alienAnimationTimeoutY = 50;
-let alienMoveX = 10;
-let alienMoveY = 10;
+let alienMoveX = 2;
+let alienMoveY = 2;
 let alienLeft = true;
 
 
@@ -43,9 +43,9 @@ addEventListener('keydown', function (event) {
     } else if (event.code == "ArrowRight") {
         player.x += 30;
     } else if (event.code == "Space") {
-             createMissle();
-        }
-    })
+        createMissle();
+    }
+})
 
 
 function createMissle() {
@@ -103,120 +103,101 @@ function GetAlienImage() {
 //     }
 //     )}
 
-    function animationTimeoutY() {
-        if (alienAnimationTimeoutY >= 0) {
-            alienAnimationTimeoutY--
-        } else {
-            alienAnimationTimeoutY = 50;
-            moveAlienY();
-        }
+function animationTimeoutY() {
+    if (alienAnimationTimeoutY >= 0) {
+        alienAnimationTimeoutY--
+    } else {
+        alienAnimationTimeoutY = 50;
     }
-
-    // function animationTimeZeroMoveRight() {
-    //     if (alienAnimationTimeoutX = 50) {
-    //         moveAlienRight()
-
-    //     }
-    // }
-
-    function animationTimeoutX() {
-        if (alienAnimationTimeoutX >= 0) {
-            alienAnimationTimeoutX--
-        } else {
-            alienAnimationTimeoutX = 10;
-            isAlienUp = !isAlienUp;
-        }
-    }
-
-    function moveAlienY() {
-        alienMoveY = (alienMoveY + 1);
-        enemies.forEach(enemy => {
-            enemy.y = enemy.y + alienMoveY
-        })
-    }
-
-    function moveAlienRight() {
-        alienMoveX = (alienMoveX + 1);
-        enemies.forEach(enemy => {
-            enemy.x = enemy.x + alienMoveX
-        })
-    }
-
-    function moveAlienLeft() {
-        alienMoveX = (alienMoveX + 1);
-        enemies.forEach(enemy => {
-            enemy.x = enemy.x - alienMoveX
-        })
-    }
-
-    function missleFire() {
-        missles.forEach(missle => {
-            missle.y = missle.y -5
-        })
-    }
-
-    // function alienLeft() {
-    //     if (alienLeft) {
-    //         moveAlienLeft() 
-    //     } else {
-    //         moveAlienRight()
-    //     }
-    // }
-
-    function getAlienXPosition(columnIndex) {
-        let margin = getPercentageOfScreen(10);
-        let spaceBetweenEnemies = getPercentageOfScreen(8);
-        let returnResult = margin + (spaceBetweenEnemies * columnIndex);
-        return returnResult;
-    }
-
-    function getPercentageOfScreen(number) {
-        return (canvas.width / 100 * number);
-    }
-
-    //moveAlienY();
-    //AlienOffScreen();
-    //moveAlienRight();
-    //moveAlienLeft();
-
-    function removeMissle() {
-    if (missle.y <= 0) {
-        missles.shift();
 }
+
+function animationTimeoutX() {
+    if (alienAnimationTimeoutX >= 0) {
+        alienAnimationTimeoutX--
+    } else {
+        alienAnimationTimeoutX = 10;
+        isAlienUp = !isAlienUp;
     }
+}
 
-    function doDraw() {
-        c.font = '18px arial';
-        c.fillStyle = '#fff';
-        c.fillText('SCORE: ' + score, 650, 20);
-        player.draw();
-        missles.forEach(function (missle) {
-            missle.draw();
-        });
-        enemies.forEach(function (enemy) {
-            enemy.draw();
-        });
+function moveAlienY() {
+    enemies.forEach(enemy => {
+        enemy.y = enemy.y + alienMoveY
+    })
+}
+
+function moveAlienRight() {
+    enemies.forEach(enemy => {
+        enemy.x = enemy.x + alienMoveX
+    })
+}
+
+function moveAlienLeft() {
+    enemies.forEach(enemy => {
+        enemy.x = enemy.x - alienMoveX
+    })
+}
+
+function missleFire() {
+    missles.forEach(missle => {
+        missle.y = missle.y - 5
+    })
+}
+
+function getAlienXPosition(columnIndex) {
+    let margin = getPercentageOfScreen(10);
+    let spaceBetweenEnemies = getPercentageOfScreen(8);
+    let returnResult = margin + (spaceBetweenEnemies * columnIndex);
+    return returnResult;
+}
+
+function getPercentageOfScreen(number) {
+    return (canvas.width / 100 * number);
+}
+
+//moveAlienY();
+//AlienOffScreen();
+//moveAlienRight();
+//moveAlienLeft();
+
+function removeMissle() {
+    if (missle.y <= 200) {
+        missles.shift();
     }
+}
+
+function doDraw() {
+    c.font = '18px arial';
+    c.fillStyle = '#fff';
+    c.fillText('SCORE: ' + score, 650, 20);
+    player.draw();
+    missles.forEach(function (missle) {
+        missle.draw();
+    });
+    enemies.forEach(function (enemy) {
+        enemy.draw();
+    });
+}
 
 
 
 
 
-    function doAnimation() {
-        animationTimeoutX();
-        animationTimeoutY();
-        missleFire()
-        removeMissle()
-    }
+function doAnimation() {
+    animationTimeoutX();
+    animationTimeoutY();
+    missleFire()
+    removeMissle()
+    moveAlienY()
+}
 
 
-    function runAnimationFrames() {
-        c.clearRect(0, 0, canvas.width, canvas.height);
-        requestAnimationFrame(runAnimationFrames);
-        doAnimation();
-        doDraw();
-    }
+function runAnimationFrames() {
+    c.clearRect(0, 0, canvas.width, canvas.height);
+    requestAnimationFrame(runAnimationFrames);
+    doAnimation();
+    doDraw();
+}
 
 
-    runAnimationFrames();
-    
+runAnimationFrames();
