@@ -1,6 +1,5 @@
 let canvas = document.querySelector('canvas');
 let c = canvas.getContext('2d');
-let pageLoaded = false;
 let player_img = new Image();
 player_img.src = './ship.svg'
 let player = {
@@ -17,6 +16,7 @@ let player = {
         c.drawImage(player_img, this.x, this.y, this.width, this.height)
     }
 }
+let enemy = {};
 let enemies = [];
 let missle = {};
 let missles = [];
@@ -25,7 +25,7 @@ let isAlienUp = true;
 let alienAnimationTimeoutX = 10;
 let alienAnimationTimeoutY = 50;
 let alienMoveX = 2;
-let alienMoveY = 2;
+let alienMoveY = 0.3;
 let alienLeft = true;
 
 
@@ -122,6 +122,22 @@ function moveAlienLeft() {
     })
 }
 
+// function reverseAlien(alienLeft) {
+//     if (alienLeft) {
+//         moveAlienRight()
+//     } else {
+//         moveAlienLeft()
+//     }
+// } 
+
+function reverseAlien2() {
+    enemies.forEach(enemy => {
+      if (enemy.x +enemy.width> canvas.width || enemy.x < 0){ 
+       alienMoveX = -alienMoveX;
+    }
+    })
+}
+
 function missleFire() {
     missles.forEach(missle => {
         missle.y = missle.y - 5
@@ -156,14 +172,14 @@ function doDraw() {
     enemies.forEach(function (enemy) {
         enemy.draw();
     });
-}
-
+} 
 
 function doAnimation() {
     missleFire()
     removeMissle()
-    moveAlienY()
     animationTimeoutX()
+    moveAlienLeft()
+    reverseAlien2()
 }
 
 
