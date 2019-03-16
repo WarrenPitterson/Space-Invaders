@@ -16,7 +16,6 @@ let player = {
         c.drawImage(player_img, this.x, this.y, this.width, this.height)
     }
 }
-let enemy = {};
 let enemies = [];
 let missle = {};
 let missles = [];
@@ -24,9 +23,8 @@ let score = 0;
 let isAlienUp = true;
 let alienAnimationTimeoutX = 10;
 let alienAnimationTimeoutY = 50;
-let alienMoveX = 2;
-let alienMoveY = 0.3;
-let alienLeft = true;
+let alienMoveX = 5;
+let alienMoveY = 10;
 
 
 canvas.width = window.innerWidth;
@@ -116,25 +114,19 @@ function moveAlienRight() {
     })
 }
 
-function moveAlienLeft() {
+function reverseAlienDirection() {
     enemies.forEach(enemy => {
-        enemy.x = enemy.x - alienMoveX
+        if (enemy.x + enemy.width > canvas.width || enemy.x < 0) {
+            alienMoveX = -alienMoveX
+        }
     })
 }
 
-// function reverseAlien(alienLeft) {
-//     if (alienLeft) {
-//         moveAlienRight()
-//     } else {
-//         moveAlienLeft()
-//     }
-// } 
-
-function reverseAlien2() {
+function alienDirectionY() {
     enemies.forEach(enemy => {
-      if (enemy.x +enemy.width> canvas.width || enemy.x < 0){ 
-       alienMoveX = -alienMoveX;
-    }
+        if (enemy.x + enemy.width > canvas.width || enemy.x < 0) {
+            moveAlienY()
+        }
     })
 }
 
@@ -145,9 +137,11 @@ function missleFire() {
 }
 
 function removeMissle() {
+    missles.forEach(missle => {
     if (missle.y <= 200) {
         missles.shift();
     }
+})
 }
 
 function getAlienXPosition(columnIndex) {
@@ -172,14 +166,15 @@ function doDraw() {
     enemies.forEach(function (enemy) {
         enemy.draw();
     });
-} 
+}
 
 function doAnimation() {
     missleFire()
     removeMissle()
     animationTimeoutX()
-    moveAlienLeft()
-    reverseAlien2()
+    moveAlienRight()
+    reverseAlienDirection()
+    alienDirectionY()
 }
 
 
