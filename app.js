@@ -17,14 +17,13 @@ let player = {
     }
 }
 let enemies = [];
-let missle = {};
 let missles = [];
 let score = 0;
 let isAlienUp = true;
 let alienAnimationTimeoutX = 10;
 let alienAnimationTimeoutY = 50;
-let alienMoveX = 5;
-let alienMoveY = 10;
+let alienMoveX = 1;
+let alienMoveY = 5;
 
 
 canvas.width = window.innerWidth;
@@ -51,8 +50,8 @@ function createMissle() {
         missle_img = new Image();
         missle_img.src = './missle.png'
         missle = {
-            width: 50,
-            height: 50,
+            width: (getPercentageOfScreen(3)),
+            height: (getPercentageOfScreen(3)),
             x: player.x,
             y: player.y,
             draw() {
@@ -108,13 +107,13 @@ function moveAlienY() {
     })
 }
 
-function moveAlienRight() {
+function moveAlienX() {
     enemies.forEach(enemy => {
         enemy.x = enemy.x + alienMoveX
     })
 }
 
-function reverseAlienDirection() {
+function reverseAlienXDirection() {
     enemies.forEach(enemy => {
         if (enemy.x + enemy.width > canvas.width || enemy.x < 0) {
             alienMoveX = -alienMoveX
@@ -172,8 +171,8 @@ function doAnimation() {
     missleFire()
     removeMissle()
     animationTimeoutX()
-    moveAlienRight()
-    reverseAlienDirection()
+    moveAlienX()
+    reverseAlienXDirection()
     alienDirectionY()
 }
 
