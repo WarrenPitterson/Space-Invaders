@@ -3,8 +3,8 @@ let c = canvas.getContext('2d');
 let player_img = new Image();
 player_img.src = './ship.svg'
 let player = {
-    width: 50,
-    height: 40,
+    width: (getPercentageOfScreen(10)),
+    height: (getPercentageOfScreen(10)),
     x: innerWidth / 2 - 25,
     y: innerHeight - 50,
     draw() {
@@ -28,11 +28,6 @@ let alienMoveY = 5;
 
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-
-function getAlienYPosition(rowIndex) {
-    let returnYresult = 200 + (50 * rowIndex)
-    return returnYresult
-}
 
 addEventListener('keydown', function (event) {
     if (event.code == "ArrowLeft") {
@@ -148,6 +143,11 @@ function getAlienXPosition(columnIndex) {
     let spaceBetweenEnemies = getPercentageOfScreen(8);
     let returnResult = margin + (spaceBetweenEnemies * columnIndex);
     return returnResult;
+}
+
+function getAlienYPosition(rowIndex) {
+    let returnYresult = 200 + (50 * rowIndex)
+    return returnYresult
 }
 
 function getPercentageOfScreen(number) {
