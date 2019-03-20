@@ -170,6 +170,7 @@ function doDraw() {
 function doAnimation() {
     missleFire()
     removeMissle()
+    maxMissles()
     animationTimeoutX()
     moveAlienX()
     reverseAlienXDirection()
