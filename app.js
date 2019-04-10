@@ -154,6 +154,14 @@ function getPercentageOfScreen(number) {
     return (canvas.width / 100 * number);
 }
 
+// function collisionDetection (enemy, missle) {
+//     if (enemy.x < missle.x + missle.width && enemy.x + enemy.width > missle.width &&
+//      enemy.y < missle.y + missle.height && missle.y + enemy.height > missle.y) {
+//          missles.shift()
+//          enemies.shift()
+//      }
+// }
+
 function doDraw() {
     c.font = '18px arial';
     c.fillStyle = '#fff';
