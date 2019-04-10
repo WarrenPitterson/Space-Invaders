@@ -36,9 +36,17 @@ addEventListener('keydown', function (event) {
         player.x += 30;
     } else if (event.code == "Space") {
         createMissle();
+        missleSound();
     }
 })
 
+
+function missleSound() {
+    let audio = new Audio
+    audio.src = './laser_sound .mp3'
+    audio.volume = 0.03;
+    audio.play()
+}
 
 function createMissle() {
     for (i = 0; i < 1; i++) {
@@ -56,7 +64,6 @@ function createMissle() {
         missles.push(missle);
     }
 }
-
 
 for (rowIndex = 0; rowIndex < 3; rowIndex++) {
     createEnemy(rowIndex)
