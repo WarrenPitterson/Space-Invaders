@@ -44,7 +44,7 @@ addEventListener('keydown', function (event) {
 function missleSound() {
     let audio = new Audio
     audio.src = './laser_sound .mp3'
-    audio.volume = 0.03;
+    audio.volume = 0.05;
     audio.play()
 }
 
