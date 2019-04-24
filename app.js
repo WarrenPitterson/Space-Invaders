@@ -37,6 +37,7 @@ addEventListener('keydown', function (event) {
     } else if (event.code == "Space") {
         createMissle();
         missleSound();
+        //add < 6 logic in here for missles
     }
 })
 
@@ -161,13 +162,19 @@ function getPercentageOfScreen(number) {
     return (canvas.width / 100 * number);
 }
 
-// function collisionDetection (enemy, missle) {
-//     if (enemy.x < missle.x + missle.width && enemy.x + enemy.width > missle.width &&
-//      enemy.y < missle.y + missle.height && missle.y + enemy.height > missle.y) {
-//          missles.shift()
-//          enemies.shift()
-//      }
-// }
+function death() {
+    //for each loop for missle 1 to see if it has collide with enemy 1-30 
+    //same again for all other missles 
+
+}
+
+function collisionDetection (enemy, missle) {
+    if (enemy.x < missle.x + missle.width && enemy.x + enemy.width > missle.width &&
+     enemy.y < missle.y + missle.height && missle.y + enemy.height > missle.y) {
+     return true 
+     }
+     return false
+}
 
 function doDraw() {
     c.font = '18px arial';
